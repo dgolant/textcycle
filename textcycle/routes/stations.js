@@ -24,7 +24,7 @@ router.get('/', function(req, res, next) {
             console.log(stationObject.data);
         }
         else{
-        	console.log('error, bro');
+        	console.log('error, broham');
         }
     })
 });
