@@ -1,10 +1,18 @@
+console.log('APP JS STARTED');
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var twilio = require('twilio');
+
+
+var config = require('./private/config.json'); 
+var twilio = require('twilio'),
+client = twilio(config.accountSID,config.authToken),
+cronJob = require('cron').CronJob;
+console.log(config.sendTime);
+
 
 var routes = require('./routes/index');
 var stations = require('./routes/stations');
@@ -58,6 +66,19 @@ app.use(function(err, req, res, next) {
     error: {}
   });
 });
+
+
+var textJob = new cronJob( config.sendTime, function(){
+  console.log('-------------MESSAGE FIRED!----------------');
+    client.sendMessage( { to:config.receivingNumber, from:config.twilioNumber, body:'Hello! Hope you’re having a good day!' }, function( err, data ) {
+    if(!error){
+      console.log('success!');
+    }else{
+      console.log(error);
+    }
+
+  });
+},  null, true);
 
 
 module.exports = app;
