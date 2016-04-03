@@ -17,3 +17,14 @@ An SMS interface for the Indianapolis Pacer Bikeshare program :D, deeply a work 
  * `npm install` in the directory you've cloned to
  * `npm start`
  * Enjoy.
+
+* * *
+
+## Roadmap:
+
+ * [x] ~~basic functionality (is it useful in my life?)~~
+ * [ ] Add a basic config UI
+ * [ ] text to get tracked station updates
+ * [ ] text to get other station updates
+ * [ ] text to reconfig
+ * [ ] host publicly? 
