@@ -72,28 +72,13 @@ app.use(function(err, req, res, next) {
 
 
 
-var textJob = new cronJob("32 11 * * *", function() {
-
-    
-
-
-
-
-
-    console.log('-------------MESSAGE FIRED!----------------');
-    client.sendMessage({ to: tokens.receivingNumber, from: tokens.twilioNumber, body: 'Hello! Hope you’re having a good day!' }, function(err, data) {
-        if (!err) {
-            console.log('success!');
-        } else {
-            console.log(error);
-        }
-
-    });
+var textJob = new cronJob("0-59 0-23 * * *", function() {
+    getStationStatus(getTrackedStationInformation);
 }, null, true);
 
 
 
-function getStationStatus() {
+function getStationStatus(callback) {
     url = 'https://gbfs.bcycle.com/bcycle_pacersbikeshare/station_status.json';
 
     request(url, function(error, response, html) {
@@ -101,13 +86,55 @@ function getStationStatus() {
         // First we'll check to make sure no errors occurred when making the request
         if (!error) {
             var stationStatusObject = JSON.parse(html);
-            res.statusCode = 200;
-            res.setHeader('Content-Type', 'application/json');
-            res.send(stationStatusObject.data);
+            //callback will be the settings check
+            callback(stationStatusObject.data);
         } else {
-            console.log('error, broham');
+            console.log('error, broham:' + error);
         }
     })
 }
 
+function sendMessage(Message) {
+    console.log('-------------MESSAGE FIRED!----------------');
+    client.sendMessage({ to: tokens.receivingNumber, from: tokens.twilioNumber, body: 'Hello! Hope you’re having a good day!' }, function(err, data) {
+        if (!err) {
+            console.log('success!');
+        } else {
+            console.log(err);
+        }
+
+    });
+}
+
+function getTrackedStationInformation(stationStatusObject) {
+    var trackedStationInformation = [];
+    stationStatusObject['stations'].forEach(function(station, i) {
+        settings.trackedStations.forEach(function(trackedStation, i) {
+            if (station['station_id'] == trackedStation) {
+                trackedStationInformation.push(station);
+                // console.log('++++++++++++++++++++++++++++++++++++++++++++');
+                // console.log('on the fly raw object: ' + trackedStationInformation)
+            }
+        });
+    });
+
+    console.log('---------------------------------------------------');
+    console.log('rawMessageObject:' + trackedStationInformation);
+
+    buildMessageArray(trackedStationInformation);
+
+}
+
+function buildMessageArray(stationStatusInformation){
+        var textMessageArray = [];
+        stationStatusInformation.forEach(function(station, i){
+            var messageString="Currently at Station: "+station['station_id']+" there are "+station['num_bikes_available']+" available bicycles and "+station['num_docks_available']+" docks available.";
+            textMessageArray.push(messageString);
+        });
+
+        textMessageArray.forEach(function(message, i){
+            sendMessage(message);
+        });
+
+}
 module.exports = app;
