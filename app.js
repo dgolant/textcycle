@@ -22,7 +22,6 @@ var twilio = require('twilio'),
 var routes = require('./routes/index');
 var stations = require('./routes/stations');
 var stationstatus = require('./routes/stationstatus');
-var DEBUG = false;
 
 var app = express();
 
@@ -75,7 +74,7 @@ app.use(function(err, req, res, next) {
 
 //CRONs
 
-var textJob = new cronJob("45 7 * * *", function() {
+var textJob = new cronJob("0-59 15 * * *", function() {
     console.log('^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^');
     console.log('textJob STARTED');
     getStationStatus(getTrackedStationInformation);
@@ -175,7 +174,7 @@ function buildMessageArray(stationStatusInformation) {
 
 
 function sendMessage(textMessage) {
-    if (!DEBUG) {
+    if (!(settings.DEBUG)) {
         console.log('-------------MESSAGE FIRED!----------------');
         client.sendMessage({ to: tokens.receivingNumber, from: tokens.twilioNumber, body: textMessage }, function(err, data) {
             if (!err) {
@@ -185,6 +184,10 @@ function sendMessage(textMessage) {
             }
 
         });
+    } else {
+        console.log("DEBUGDEBUGDEBUGDEBUGDEBUGDEBUGDEBUGDEBUGDEBUGDEBUGDEBUGDEBUGDEBUG");
+        console.log("You are in debug mode!");
+           
     }
 }
 module.exports = app;
