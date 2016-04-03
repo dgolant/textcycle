@@ -187,6 +187,8 @@ function sendMessage(textMessage) {
     } else {
         console.log("DEBUGDEBUGDEBUGDEBUGDEBUGDEBUGDEBUGDEBUGDEBUGDEBUGDEBUGDEBUGDEBUG");
         console.log("You are in debug mode!");
+        console.log("DEBUG: TextMessage Body>");
+        console.log(textMessage);
            
     }
 }
