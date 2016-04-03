@@ -27,4 +27,5 @@ An SMS interface for the Indianapolis Pacer Bikeshare program :D, deeply a work 
  * [ ] text to get tracked station updates
  * [ ] text to get other station updates
  * [ ] text to reconfig
+ * [ ] Add other GBFS cities?
  * [ ] host publicly? 
