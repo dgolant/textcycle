@@ -1,7 +1,0 @@
-{
-    "accountSID": "ACCOUNTSID",
-    "authToken": "AUTHTOKEN",
-    "receivingNumber": "+1800MYNUMBR",
-    "twilioNumber": "+1800TWILONM",
-    "sendTime": "2 22 * * *"
-}

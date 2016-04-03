@@ -1,4 +1,4 @@
 {
-	"trackedStations": [],
+	"trackedStations": ["bcycle_pacersbikeshare_2605", "bcycle_pacersbikeshare_2629"],
 	"sendTimes": ["4 11 * * *"]
 }
