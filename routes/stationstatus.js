@@ -4,10 +4,6 @@ var request = require('request');
 var util = require('util');
 
 
-var twilio = require('twilio'),
-    client = twilio('ACCOUNTSID', 'AUTHTOKEN'),
-    cronJob = require('cron').CronJob;
-
 router.get('/', function(req, res, next) {
     url = 'https://gbfs.bcycle.com/bcycle_pacersbikeshare/station_status.json';
 
@@ -24,13 +20,6 @@ router.get('/', function(req, res, next) {
         }
     })
 });
-
-
-var textJob = new cronJob('10 22 * * *', function() {
-    console.log('fired');
-    client.sendMessage({ to: 'recipient number', from: 'twilio number', body: 'Hello! Hope you’re having a good day!' }, function(err, data) {});
-}, null, true);
-
 
 
 
