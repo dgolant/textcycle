@@ -9,7 +9,6 @@ var request = require('request');
 var fs = require('fs');
 
 
-
 var tokens = require('./private/tokens.json');
 var settings = require('./private/settings.json');
 var stationMetaDataFromDisk = require('./stationMetaData.json');
@@ -73,12 +72,16 @@ app.use(function(err, req, res, next) {
 });
 
 //CRONs
+var textJobs = [];
+settings.sendTimes.forEach(function(sendTime, i) {
+    console.log(sendTime);
+    textJobs[i] = new cronJob(sendTime, function() { //Cron format is (SS MM HH DoM MM DoW)
+        console.log('^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^');
+        console.log('textJob STARTED');
+        getStationStatus(getTrackedStationInformation);
+    }, null, true);
 
-var textJob = new cronJob("0-59 15 * * *", function() {
-    console.log('^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^');
-    console.log('textJob STARTED');
-    getStationStatus(getTrackedStationInformation);
-}, null, true);
+});
 
 
 var stationInformationJob = new cronJob("0 0 * * *", function() {
@@ -154,27 +157,26 @@ function getTrackedStationInformation(stationStatusObject) {
 
 function buildMessageArray(stationStatusInformation) {
     var textMessageArray = [];
-    //    console.log('**********************************')
     var stationsMDArray = stationMetaDataFromDisk['data']['stations'];
     stationStatusInformation.forEach(function(station, i) {
         stationsMDArray.forEach(function(stationMetaObject, i) {
             if (station['station_id'] == stationMetaObject['station_id']) {
-                var messageString = "There are currently "  + station['num_bikes_available'] + " bicycles available and " + station['num_docks_available'] + " open docks at the "+ stationMetaObject['name']+" Bikeshare Station";
+                var messageString = "There are currently " + station['num_bikes_available'] + " bicycles available and " + station['num_docks_available'] + " open docks at the " + stationMetaObject['name'] + " Bikeshare Station";
                 textMessageArray.push(messageString);
             }
 
         });
 
     });
-
+    console.log('-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-');
+    console.log(textMessageArray);
     textMessageArray.forEach(function(message, i) {
         sendMessage(message);
     });
 }
 
-
 function sendMessage(textMessage) {
-    if (!(settings.DEBUG)) {
+    if ((settings.DEBUG)=="false") {
         console.log('-------------MESSAGE FIRED!----------------');
         client.sendMessage({ to: tokens.receivingNumber, from: tokens.twilioNumber, body: textMessage }, function(err, data) {
             if (!err) {
@@ -189,7 +191,7 @@ function sendMessage(textMessage) {
         console.log("You are in debug mode!");
         console.log("DEBUG: TextMessage Body>");
         console.log(textMessage);
-           
+
     }
 }
 module.exports = app;
