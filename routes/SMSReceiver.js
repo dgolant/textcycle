@@ -6,7 +6,7 @@ var stationChooser = require('./../stationChooser.js');
 
 router.post('/', function(req, res) {
 	smsPayload = JSON.parse(req);
-	console.log(smsPayload.Body);
+	//console.log(smsPayload.Body);
     res.send('Got a POST request');
 });
 
