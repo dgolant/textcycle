@@ -18,4 +18,5 @@ function stationIDForName(requestedStationName) {
             return requestedID;
         }
     });
+    return (false);
 }

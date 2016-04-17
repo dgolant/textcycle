@@ -13,7 +13,9 @@ router.post('/',jsonParser, function(req, res) {
 		return res.sendStatus(400);
 		console.log('BAD JSON FORM REQUEST');
 	}
-	console.log(req.body);
+	var smsPayload = req.body;
+	console.log(smsPayload.Body);
+	var stationID = stationChooser.stationIDForName('StationID: '+smsPayload.Body);
 	res.send('welcome, ' + req.body);
 });
 
