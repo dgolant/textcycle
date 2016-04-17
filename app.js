@@ -28,6 +28,12 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
+//PORT STUFF LISTEN
+app.set('port', (process.env.PORT || 5000));
+
+app.listen(app.get('port'), function() {
+    console.log('Node app is running on port', app.get('port'));
+});
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
@@ -176,7 +182,7 @@ function buildMessageArray(stationStatusInformation) {
 }
 
 function sendMessage(textMessage) {
-    if ((settings.DEBUG)=="false") {
+    if ((settings.DEBUG) == "false") {
         console.log('-------------MESSAGE FIRED!----------------');
         client.sendMessage({ to: tokens.receivingNumber, from: tokens.twilioNumber, body: textMessage }, function(err, data) {
             if (!err) {
