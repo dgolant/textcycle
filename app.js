@@ -76,7 +76,7 @@ var textJobs = [];
 settings.sendTimes.forEach(function(sendTime, i) {
     console.log(sendTime);
     textJobs[i] = new cronJob(sendTime, function() { //Cron format is (SS MM HH DoM MM DoW)
-        console.log('^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^');
+        console.log('^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^');
         console.log('textJob STARTED');
         getStationStatus(getTrackedStationInformation);
     }, null, true);
