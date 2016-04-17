@@ -7,3 +7,5 @@ router.post('/', function(req, res) {
 	console.log(req);
     res.send('Got a POST request');
 });
+
+module.exports = router;
