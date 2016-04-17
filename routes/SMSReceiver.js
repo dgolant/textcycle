@@ -3,11 +3,18 @@ var router = express.Router();
 var request = require('request');
 var util = require('util');
 var stationChooser = require('./../stationChooser.js');
+var bodyParser = require('body-parser');
 
-router.post('/', function(req, res) {
-	smsPayload = JSON.parse(req);
-	//console.log(smsPayload.Body);
-    res.send('Got a POST request');
+var jsonParser = bodyParser.json();
+
+
+router.post('/',jsonParser, function(req, res) {
+	if (!req.body) {
+		return res.sendStatus(400);
+		console.log('BAD JSON FORM REQUEST');
+	}
+	console.log(req.body);
+	res.send('welcome, ' + req.body);
 });
 
 module.exports = router;
