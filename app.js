@@ -21,6 +21,7 @@ var twilio = require('twilio'),
 var routes = require('./routes/index');
 var stations = require('./routes/stations');
 var stationstatus = require('./routes/stationstatus');
+var SMSReceiver = require('./routes/SMSReceiver');
 
 var app = express();
 
@@ -45,6 +46,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
 app.use('/stations', stations);
 app.use('/stationstatus', stationstatus);
+app.use('/SMSReceiver', SMSReceiver);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
