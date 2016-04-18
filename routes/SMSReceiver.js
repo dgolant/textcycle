@@ -23,7 +23,7 @@ router.post('/', jsonParser, function(req, res) {
     twimlResp.message(JSON.stringify(stationID));
     console.log("stationID at twimlRESP:" + JSON.stringify(stationID));
     res.setHeader('Content-Type', 'text/xml');
-    res.send(twimlResp);
+    res.send(twimlResp.toString);
 });
 
 module.exports = router;
