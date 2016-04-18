@@ -13,9 +13,7 @@ router.post('/', jsonParser, function(req, res) {
     // 	return res.sendStatus(500);
     // 	console.log('BAD JSON FORM REQUEST');
     // }
-    res.setHeader(200, {
-        'Content-Type': 'text/xml'
-    });
+
 
     var smsPayload = req.body;
     console.log(smsPayload.Body);
@@ -24,6 +22,9 @@ router.post('/', jsonParser, function(req, res) {
     var twimlResp = new twilio.TwimlResponse();
     twimlResp.message(stationID);
     console.log("stationID at twimlRESP:" + stationID);
+    res.setHeader(200, {
+        'Content-Type': 'text/xml'
+    });
     res.send(twimlResp);
 });
 
