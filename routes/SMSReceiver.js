@@ -13,15 +13,16 @@ router.post('/', jsonParser, function(req, res) {
     // 	return res.sendStatus(500);
     // 	console.log('BAD JSON FORM REQUEST');
     // }
+    res.writeHead(200, {
+        'Content-Type': 'text/xml'
+    });
+
     var smsPayload = req.body;
     console.log(smsPayload.Body);
     var stationID = stationChooser.stationIDForName(smsPayload.Body);
 
     var twimlResp = new twilio.TwimlResponse();
     twimlResp.message(stationID);
-    // res.writeHead(200, {
-    //        'Content-Type':'text/xml'
-    //    });
     console.log("stationID at twimlRESP:" + stationID);
     res.send(twimlResp);
 });

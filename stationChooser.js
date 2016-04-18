@@ -8,7 +8,7 @@ var bodyParser = require('body-parser');
 var request = require('request');
 var fs = require('fs');
 var stationMetaDataFromDisk = require('./stationMetaData.json');
-var twilio = require('twilio');
+
 
 
 var stationIDForName = function(requestedStationName) {
@@ -17,7 +17,7 @@ var stationIDForName = function(requestedStationName) {
     // console.log('stationChooser ENTERED');
     stationsMDArray.forEach(function(stationMetaObject, i) {
         // console.log('stationChooser LOOP ENTERED');
-        console.log(requestedStationName);
+        // console.log(requestedStationName);
         if (requestedStationName == stationMetaObject['name']) {
             console.log('stationChooser LOOP CONDITIONAL ENTERED');
             requestedID = stationMetaObject['station_id'];
