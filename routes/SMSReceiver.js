@@ -6,7 +6,7 @@ var stationChooser = require('./../stationChooser.js');
 var bodyParser = require('body-parser');
 
 var jsonParser = bodyParser.json();
-
+var twilio = require('twilio');
 
 router.post('/',jsonParser, function(req, res) {
 	if (!req.body) {
@@ -15,8 +15,14 @@ router.post('/',jsonParser, function(req, res) {
 	}
 	var smsPayload = req.body;
 	console.log(smsPayload.Body);
-	//var stationID = stationChooser.stationIDForName('StationID: '+smsPayload.Body);
-	res.send('welcome, ' + req.body);
+	var stationID = stationChooser.stationIDForName(smsPayload.Body);
+
+	var twimlResp = new twilio.TwimlResponse();
+	twimlResp.message(stationID);
+	res.writeHead(200, {
+        'Content-Type':'text/xml'
+    });
+	res.send(twimlResp);
 });
 
 module.exports = router;

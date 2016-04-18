@@ -8,15 +8,23 @@ var bodyParser = require('body-parser');
 var request = require('request');
 var fs = require('fs');
 var stationMetaDataFromDisk = require('./stationMetaData.json');
+var twilio = require('twilio');
 
 
-function stationIDForName(requestedStationName) {
+var stationIDForName = function(requestedStationName) {
     var stationsMDArray = stationMetaDataFromDisk['data']['stations'];
+    var requestedID = '000';
+    // console.log('stationChooser ENTERED');
     stationsMDArray.forEach(function(stationMetaObject, i) {
-        if (requestedStationNameu == stationMetaObject['name']) {
-            var requestedID = stationMetaObject['station_id'];
-            return requestedID;
+        // console.log('stationChooser LOOP ENTERED');
+        console.log(requestedStationName);
+        if (requestedStationName == stationMetaObject['name']) {
+            console.log('stationChooser LOOP CONDITIONAL ENTERED');
+            requestedID = stationMetaObject['station_id'];
+            console.log("stationID in loop:"+requestedID);
         }
     });
-    return (false);
+    return requestedID;
 }
+
+module.exports.stationIDForName = stationIDForName;
