@@ -9,10 +9,10 @@ var jsonParser = bodyParser.json();
 var twilio = require('twilio');
 
 router.post('/',jsonParser, function(req, res) {
-	if (!req.body) {
-		return res.sendStatus(500);
-		console.log('BAD JSON FORM REQUEST');
-	}
+	// if (!req.body) {
+	// 	return res.sendStatus(500);
+	// 	console.log('BAD JSON FORM REQUEST');
+	// }
 	var smsPayload = req.body;
 	console.log(smsPayload.Body);
 	var stationID = stationChooser.stationIDForName(smsPayload.Body);
