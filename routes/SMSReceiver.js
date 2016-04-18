@@ -22,9 +22,9 @@ router.post('/', jsonParser, function(req, res) {
     var twimlResp = new twilio.TwimlResponse();
     twimlResp.message(JSON.stringify(stationID));
     console.log("stationID at twimlRESP:" + JSON.stringify(stationID));
-    res.setHeader(200, {
-        'Content-Type': 'text/xml'
-    });
+    // res.setHeader(200, {
+    //     'Content-Type': 'text/xml'
+    // });
     res.send(twimlResp);
 });
 
