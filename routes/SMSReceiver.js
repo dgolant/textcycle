@@ -13,7 +13,7 @@ router.post('/', jsonParser, function(req, res) {
     // 	return res.sendStatus(500);
     // 	console.log('BAD JSON FORM REQUEST');
     // }
-    res.writeHead(200, {
+    res.setHeader(200, {
         'Content-Type': 'text/xml'
     });
 
