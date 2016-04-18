@@ -20,8 +20,8 @@ router.post('/', jsonParser, function(req, res) {
     var stationID = stationChooser.stationIDForName(smsPayload.Body);
 
     var twimlResp = new twilio.TwimlResponse();
-    twimlResp.message(stationID);
-    console.log("stationID at twimlRESP:" + stationID);
+    twimlResp.message(JSON.stringify(stationID));
+    console.log("stationID at twimlRESP:" + JSON.stringify(stationID));
     res.setHeader(200, {
         'Content-Type': 'text/xml'
     });
