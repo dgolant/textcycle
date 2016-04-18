@@ -14,14 +14,15 @@ var stationMetaDataFromDisk = require('./stationMetaData.json');
 
 //this function returns either an object representing station statuses or fires a callback to a given function
 var getStationStatuses = function(trackedStationCallback) {
+    console.log("getStationStatuses" + 1);
     url = 'https://gbfs.bcycle.com/bcycle_pacersbikeshare/station_status.json';
-
+    console.log("getStationStatuses" + 1);
     request(url, function(error, response, html) {
-
+        console.log("getStationStatuses" + 1);
         // First we'll check to make sure no errors occurred when making the request
         if (!error) {
             var stationStatusObject = JSON.parse(html);
-
+            console.log("getStationStatuses" + 1);
             if (trackedStationCallback !== null) {
                 //callback will be the settings check
                 trackedStationCallback(stationStatusObject.data);
@@ -35,16 +36,16 @@ var getStationStatuses = function(trackedStationCallback) {
 }
 
 
-var selectIndividualStation = function(stationStatusObject) {
+var selectIndividualStation = function(stationStatusObject, requestedStationID) {
     var trackedStationInformation = [];
     stationStatusObject['stations'].forEach(function(station, i) {
         settings.trackedStations.forEach(function(trackedStation, i) {
-            if (station['station_id'] == trackedStation) {
+            if (station['station_id'] == requestedStationID) {
                 trackedStationInformation.push(station);
             }
         });
     });
-    return(trackedStationInformation)
+    return (trackedStationInformation)
 }
 
 module.exports.getStationStatuses = getStationStatuses;
