@@ -22,6 +22,7 @@ router.post('/',jsonParser, function(req, res) {
 	res.writeHead(200, {
         'Content-Type':'text/xml'
     });
+    console.log("stationID at twimlRESP:"+stationID);
 	res.send(twimlResp);
 });
 
