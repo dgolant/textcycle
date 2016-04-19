@@ -17,7 +17,7 @@ router.post('/', jsonParser, function(req, res) {
 
 
     var smsPayload = req.body;
-    console.log(smsPayload.Body);
+    console.log(smsPayload);
 
     var stationID = stationChooser.stationIDForName(smsPayload.Body);
 
