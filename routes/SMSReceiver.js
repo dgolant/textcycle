@@ -22,9 +22,9 @@ router.post('/', jsonParser, function(req, res) {
     var stationID = stationChooser.stationIDForName(smsPayload.Body);
     
     var stationStatuses = fetchStationStatus.getStationStatuses();
-    console.log(stationStatuses);
+    console.log("stationStatuses: "+stationStatuses);
     var requestedStationStatus = fetchStationStatus.selectIndividualStation(stationStatuses, stationID);
-    console.log(requestedStationStatus);
+    console.log("requestedStationStatus: "+requestedStationStatus);
     
     var twimlResp = new twilio.TwimlResponse();
     twimlResp.message(JSON.stringify(stationID));
