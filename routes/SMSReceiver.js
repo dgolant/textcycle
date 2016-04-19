@@ -20,7 +20,7 @@ router.post('/', jsonParser, function(req, res) {
     // console.log(smsPayload.Body);
 
     var stationID = stationChooser.stationIDForName(smsPayload.Body);
-    
+    console.log(JSON.stringify(smsPayload.body));
     var stationStatuses = fetchStationStatus.getStationStatuses();
     console.log("stationStatuses: "+stationStatuses);
     var requestedStationStatus = fetchStationStatus.selectIndividualStation(stationStatuses, stationID);
