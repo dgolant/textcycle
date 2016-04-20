@@ -19,9 +19,9 @@ var stationIDForName = function(requestedStationName) {
         // console.log('stationChooser LOOP ENTERED');
         // console.log(requestedStationName);
         if (requestedStationName == stationMetaObject['name']) {
-            console.log('stationChooser LOOP CONDITIONAL ENTERED');
+            // console.log('stationChooser LOOP CONDITIONAL ENTERED');
             requestedID = stationMetaObject['station_id'];
-            console.log("stationID in loop:"+requestedID);
+            // console.log("stationID in loop:"+requestedID);
         }
     });
     return requestedID;
