@@ -17,11 +17,9 @@ router.post('/', jsonParser, function(req, res) {
 
 
     var smsPayload = req.body;
-<<<<<<< HEAD
 
     var stationID = stationChooser.stationIDForName(smsPayload.Body);
 
-    
     var stationStatuses = fetchStationStatus.getStationStatuses();
     console.log("station statuses: "+JSON.stringify(stationStatuses.data));
 
@@ -30,7 +28,6 @@ router.post('/', jsonParser, function(req, res) {
     var requestedStationStatus = fetchStationStatus.selectIndividualStation(stationStatuses.data, stationID);
     console.log(requestedStationStatus);
 
-=======
     console.log(smsPayload);
 
     var stationID = stationChooser.stationIDForName(smsPayload.Body);
@@ -39,8 +36,6 @@ router.post('/', jsonParser, function(req, res) {
     console.log("stationStatuses: "+stationStatuses);
     var requestedStationStatus = fetchStationStatus.selectIndividualStation(stationStatuses, stationID);
     console.log("requestedStationStatus: "+requestedStationStatus);
-    
->>>>>>> 9ac5dc95f02ca6d4ddad2e5b1f99b140369278ef
     var twimlResp = new twilio.TwimlResponse();
     twimlResp.message(JSON.stringify(stationID));
     console.log("stationID at twimlRESP:" + JSON.stringify(stationID));
