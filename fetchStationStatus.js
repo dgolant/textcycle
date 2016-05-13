@@ -27,6 +27,7 @@ var getStationStatuses = function(trackedStationCallback) {
                 //callback will be the settings check
                 trackedStationCallback(stationStatusObject.data);
             } else {
+                console.log(":::::::::::::::::::::::::::::::::::::::")
                 console.log(stationStatusObject);
                 return stationStatusObject
             }
