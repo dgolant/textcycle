@@ -28,7 +28,7 @@ var getStationStatuses = function(trackedStationCallback) {
                 trackedStationCallback(stationStatusObject.data);
             } else {
                 console.log(":::::::::::::::::::::::::::::::::::::::")
-                console.log(stationStatusObject);
+                //console.log(stationStatusObject);
                 return stationStatusObject
             }
         } else {
