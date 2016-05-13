@@ -10,17 +10,13 @@ var jsonParser = bodyParser.json();
 var twilio = require('twilio');
 
 router.post('/', jsonParser, function(req, res) {
-    // if (!req.body) {
-    // 	return res.sendStatus(500);
-    // 	console.log('BAD JSON FORM REQUEST');
-    // }
-
 
     var smsPayload = req.body;
 
     var stationID = stationChooser.stationIDForName(smsPayload.Body);
 
     var stationStatuses = fetchStationStatus.getStationStatuses();
+    console.log("+++++++++++++++++++++++++++++");
     console.log("station statuses: "+JSON.stringify(stationStatuses.data));
 
 
@@ -29,6 +25,7 @@ router.post('/', jsonParser, function(req, res) {
     console.log(requestedStationStatus);
 
     console.log(smsPayload);
+    console.log("=================================");
 
     var stationID = stationChooser.stationIDForName(smsPayload.Body);
 
