@@ -15,29 +15,32 @@ router.post('/', jsonParser, function(req, res) {
 
     var stationID = stationChooser.stationIDForName(smsPayload.Body);
 
-    var stationStatuses = fetchStationStatus.getStationStatuses();
-    console.log("+++++++++++++++++++++++++++++");
-    console.log("station statuses: "+JSON.stringify(stationStatuses.data));
+    fetchStationStatus.getStationStatuses().then(function(response) {
+        console.log("+++++++++++++++++++++++++++++");
+        // console.log("station statuses: " + JSON.stringify(response.data));
+        // console.log("///////////////////////////////////");
 
+        var stationStatuses = response;
+        console.log("///////////////////////////////////");
+        var requestedStationStatus = fetchStationStatus.selectIndividualStation(stationStatuses.data, stationID);
+        console.log(requestedStationStatus);
 
-    console.log("///////////////////////////////////");
-    var requestedStationStatus = fetchStationStatus.selectIndividualStation(stationStatuses.data, stationID);
-    console.log(requestedStationStatus);
+        console.log(smsPayload);
+        console.log("=================================");
 
-    console.log(smsPayload);
-    console.log("=================================");
+        var stationID = stationChooser.stationIDForName(smsPayload.Body);
 
-    var stationID = stationChooser.stationIDForName(smsPayload.Body);
-
-    var stationStatuses = fetchStationStatus.getStationStatuses();
-    console.log("stationStatuses: "+stationStatuses);
-    var requestedStationStatus = fetchStationStatus.selectIndividualStation(stationStatuses, stationID);
-    console.log("requestedStationStatus: "+requestedStationStatus);
-    var twimlResp = new twilio.TwimlResponse();
-    twimlResp.message(JSON.stringify(stationID));
-    console.log("stationID at twimlRESP:" + JSON.stringify(stationID));
-    res.writeHead(200, { 'Content-Type': 'text/xml' });
-    res.end(twimlResp.toString());
+        console.log("stationStatuses: " + stationStatuses);
+        var requestedStationStatus = fetchStationStatus.selectIndividualStation(stationStatuses, stationID);
+        console.log("requestedStationStatus: " + requestedStationStatus);
+        var twimlResp = new twilio.TwimlResponse();
+        twimlResp.message(JSON.stringify(stationID));
+        console.log("stationID at twimlRESP:" + JSON.stringify(stationID));
+        res.writeHead(200, { 'Content-Type': 'text/xml' });
+        res.end(twimlResp.toString());
+    }, function(error) {
+        console.error("Failed!", error);
+    });
 });
 
 module.exports = router;
